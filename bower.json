@@ -1,0 +1,22 @@
+{
+  "name": "HTTPtrap",
+  "version": "0.0.1",
+  "description": "HTTPtrap - Test your HTTP endpoints",
+  "authors": [
+    "Chris Serino <themindoverall@gmail.com>"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.0.3",
+    "sass-bootstrap": "~3.0.2",
+    "angular": "~1.2.10",
+    "angular-bootstrap": "~0.10.0"
+  }
+}

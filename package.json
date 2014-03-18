@@ -1,0 +1,39 @@
+{
+  "name": "HTTPtrap",
+  "version": "0.0.1",
+  "description": "HTTPtrap - Test your HTTP endpoints",
+  "private": false,
+  "author": "Chris Serino <themindoverall@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/themindoverall/httptrap.git"
+  },
+  "engines": {
+    "node": "0.10.25",
+    "npm": "1.2.x"
+  },
+  "scripts": {
+    "start": "NODE_ENV=development ./node_modules/.bin/nodemon server.js",
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha --reporter spec test/test-*.js"
+  },
+  "dependencies": {
+    "express": "latest",
+    "connect-flash": "latest",
+    "node-uuid": "latest",
+    "forever": "latest",
+    "moment": "latest",
+    "globalize": "latest"
+  },
+  "devDependencies": {
+    "supertest": "latest",
+    "mocha": "latest",
+    "nodemon": "latest",
+    "grunt": "~0.4.2",
+    "grunt-bower-task": "~0.3.4",
+    "grunt-contrib-uglify": "~0.2.7",
+    "grunt-sass": "~0.9.0",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-angular-templates": "~0.5.1"
+  }
+}
