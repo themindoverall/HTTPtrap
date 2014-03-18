@@ -22,7 +22,11 @@
     "node-uuid": "latest",
     "forever": "latest",
     "moment": "latest",
-    "globalize": "latest"
+    "globalize": "latest",
+    "bluebird": "~1.1.0",
+    "lodash": "~2.4.1",
+    "redis": "~0.10.1",
+    "hiredis": "~0.1.16"
   },
   "devDependencies": {
     "supertest": "latest",
@@ -34,6 +38,10 @@
     "grunt-sass": "~0.9.0",
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-watch": "~0.5.3",
-    "grunt-angular-templates": "~0.5.1"
+    "grunt-angular-templates": "~0.5.1",
+    "grunt-express-server": "~0.4.13",
+    "grunt-usemin": "~2.1.0",
+    "load-grunt-tasks": "~0.4.0",
+    "grunt-contrib-copy": "~0.5.0"
   }
 }

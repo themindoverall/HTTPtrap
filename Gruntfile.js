@@ -1,8 +1,16 @@
 module.exports = function(grunt) {
 
+  require('load-grunt-tasks')(grunt);
+
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    httptrap: {
+      // configurable paths
+      client: 'client',
+      server: 'server',
+      dist: 'dist'
+    },
     bower: {
       install: {
         options: {
@@ -27,24 +35,73 @@ module.exports = function(grunt) {
           'tmp/grunt/sass-bootstrap/bootstrap.js',
           'tmp/grunt/angular/angular.js',
           'tmp/grunt/angular-bootstrap/ui-bootstrap-tpls.js',
-          'tmp/grunt/underscore/underscore.js',
-          'tmp/grunt/q/q.js',
+          'tmp/grunt/lodash/lodash.compat.js',
+          'tmp/grunt/restangular/restangular.js',
           'client/javascripts/app.js',
           'tmp/grunt/templates.js',
-          'client/javascripts/controllers/**.js',
-          'client/javascripts/directives/**.js',
-          'client/javascripts/services/**.js'
+          'client/javascripts/controllers/**/*.js',
+          'client/javascripts/directives/**/*.js',
+          'client/javascripts/services/**/*.js'
         ],
-        'dest': 'public/js/app.js'
+        'dest': '<%= httptrap.dist %>/js/app.js'
       }
     },
+
+    copy: {
+      dist: {
+        files: [
+          {
+            expand: true,
+            dot: true,
+            flatten: true,
+            dest: '<%= httptrap.dist %>/fonts',
+            src: [
+              'tmp/grunt/sass-bootstrap/glyphicons-*'
+            ]
+          },
+          {
+            src: ['<%= httptrap.client %>/index.html'],
+            dest: '<%= httptrap.dist %>/index.html'
+          }
+        ]
+      }
+    },
+
     sass: {
       dist: {
         options: {
           includePaths: ['bower_components/sass-bootstrap/lib/']
         },
         files: {
-          'public/css/app.css': 'client/stylesheets/main.scss'
+          '<%= httptrap.dist %>/css/app.css': 'client/stylesheets/main.scss'
+        }
+      }
+    },
+
+    useminPrepare: {
+      html: '<%= httptrap.client %>/index.html',
+      options: {
+        dest: '<%= httptrap.dist %>'
+      }
+    },
+
+    // Performs rewrites based on rev and the useminPrepare configuration
+    usemin: {
+      html: ['<%= httptrap.dist %>/{,*/}*.html'],
+      css: ['<%= httptrap.dist %>/styles/{,*/}*.css'],
+      options: {
+        assetsDirs: ['<%= httptrap.dist %>']
+      }
+    },
+
+    express: {
+      options: {
+        // Override defaults here
+        port: 5000
+      },
+      dev: {
+        options: {
+          script: 'app.js'
         }
       }
     },
@@ -69,17 +126,19 @@ module.exports = function(grunt) {
         options: {
           spawn: false
         }
+      },
+      express: {
+        files: ['app.js', 'server/**/*.js'],
+        tasks:  [ 'express:dev' ],
+        options: {
+          spawn: false // for grunt-contrib-watch v0.5.0+, "nospawn: true" for lower versions. Without this option specified express won't be reloaded
+        }
       }
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-bower-task');
-  grunt.loadNpmTasks('grunt-sass');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-angular-templates');
-
   // Default task(s).
-  grunt.registerTask('default', ['bower:install', 'ngtemplates', 'concat', 'sass']);
+  grunt.registerTask('default', ['bower:install', 'useminPrepare', 'ngtemplates', 'concat', 'sass', 'copy:dist']);
 
+  grunt.registerTask('serve', ['default', 'express:dev', 'watch' ]);
 };
